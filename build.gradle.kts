@@ -25,7 +25,7 @@ repositories {
 dependencies {
     implementation(kotlin("stdlib-jdk8"))
     implementation("io.ktor:ktor-serialization:1.6.2")
-
+    implementation("com.auth0:java-jwt:3.18.1")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.0")
     implementation("org.flywaydb:flyway-core:7.7.3")
     implementation ("org.postgresql:postgresql:42.2.23")
