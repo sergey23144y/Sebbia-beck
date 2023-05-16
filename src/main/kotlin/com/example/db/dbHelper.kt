@@ -42,6 +42,7 @@ class dbHelper {
 
         // Создаем таблицу users
         transaction {
+
             addLogger(StdOutSqlLogger) // Логируем SQL-запросы
 
 
@@ -71,6 +72,7 @@ class dbHelper {
         val token_long : Column<String> = varchar("token_long", 64)
     }
 }
+
 
 
 
