@@ -11,10 +11,7 @@ import org.postgresql.ds.PGSimpleDataSource
 import java.sql.Connection
 import java.sql.SQLException
 
-
 fun Application.CreaytUser() {
-
-
 
     // Определяем маршрут для POST запроса на добавление нового пользователя
     routing {
@@ -41,8 +38,6 @@ fun Application.CreaytUser() {
         }
     }
 }
-
-
 
 
 data class User(val name: String)
