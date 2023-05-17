@@ -1,6 +1,5 @@
-package com.example.plugins
+package com.example.features.register
 
-import com.example.db.dbHelper
 import com.google.gson.Gson
 import io.ktor.http.*
 import io.ktor.server.application.*
@@ -15,7 +14,7 @@ fun Application.CreaytUser() {
 
     // Определяем маршрут для POST запроса на добавление нового пользователя
     routing {
-        post("/users") {
+        post("/registers") {
             // Получаем данные пользователя из тела запроса
             val json = call.receive<String>()
 
@@ -23,21 +22,20 @@ fun Application.CreaytUser() {
 
             val name = gson.fromJson(json,User::class.java)
 
-            // Сохраняем пользователя в базе данных
-            try {
-
-                var dbHelper = dbHelper()
-                dbHelper.creatyTable(name.name)
-
-                // Отправляем ответ с данными пользователя
-                call.respond(name.toString())
-            } catch (e: SQLException) {
-                // Если произошла ошибка при выполнении запроса, возвращаем ошибку
-                call.respond(HttpStatusCode.InternalServerError, "Error adding user")
-            }
+//            // Сохраняем пользователя в базе данных
+//            try {
+//
+//                var dbHelper = dbHelper()
+//                dbHelper.creatyTable(name.name)
+//
+//                // Отправляем ответ с данными пользователя
+//                call.respond(name.toString())
+//            } catch (e: SQLException) {
+//                // Если произошла ошибка при выполнении запроса, возвращаем ошибку
+//                call.respond(HttpStatusCode.InternalServerError, "Error adding user")
+//            }
         }
     }
 }
-
 
 data class User(val name: String)
