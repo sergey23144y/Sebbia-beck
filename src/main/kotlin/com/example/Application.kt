@@ -51,4 +51,6 @@ fun Application.module() {
     SumNambers()
     configureRouting()
     login()
+    filetext()
+    photo()
 }
