@@ -5,8 +5,8 @@ import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.response.*
 import java.util.*
-import  com.example.database.users.User
-import com.example.database.users.UsersDTO
+import  com.example.database.user.User
+import com.example.database.user.UsersDTO
 import com.example.utils.isValidPassword
 import io.ktor.server.request.*
 
@@ -30,10 +30,6 @@ class RegisterController(val call: ApplicationCall) {
                UsersDTO(
                     login = registerReciveRemote.login,
                     password = registerReciveRemote.login,
-                    surname = "rewe",
-                    name = "rwe",
-                    middle_name = "erw",
-                    type_of_activity = 0,
                     token_short = "",
                     token_long = ""
                )

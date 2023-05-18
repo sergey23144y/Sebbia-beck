@@ -1,7 +1,7 @@
 package com.example.features.login
 
-import com.example.database.users.User
-import com.example.database.users.UsersDTO
+import com.example.database.user.User
+import com.example.database.user.UsersDTO
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.request.*
@@ -22,10 +22,6 @@ class LoginController(private val call: ApplicationCall) {
                     UsersDTO(
                         login = receive.login,
                         password = receive.login,
-                        surname = "",
-                        name = "",
-                        middle_name = "",
-                        type_of_activity = 0,
                         token_short = "",
                         token_long = token
                     )
