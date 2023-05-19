@@ -1,15 +1,12 @@
 package com.example
 
-
-
-import com.example.db.UserRoleProject.UserRoleProjectDTO
-import com.example.db.UserRoleProject.UserRoleProjectModel
 import com.example.db.dataDb.password
 import com.example.db.dataDb.url
 import com.example.db.dataDb.user
-import com.example.db.dbHelper
-import io.ktor.server.application.*
+import com.example.features.login.configureLoginRouting
+import com.example.features.register.configureRegisterRouting
 import com.example.plugins.*
+import io.ktor.server.application.*
 import io.ktor.server.engine.*
 import io.ktor.server.netty.*
 import org.flywaydb.core.Flyway
@@ -27,13 +24,6 @@ fun main() {
    embeddedServer(Netty, port = 8080, host = "0.0.0.0", module = Application::module)
         .start(wait = true)
 
-    val userRoleProjectDTO = UserRoleProjectDTO(null,null,null,1 )
-
-    UserRoleProjectModel.insert(userRoleProjectDTO)
-    println(UserRoleProjectModel.fetchTask(5).id)
-
-    var dbHelper = dbHelper()
-    dbHelper.addUser()
 
 // настраиваем Flyway
     val flyway = Flyway.configure()
@@ -47,10 +37,12 @@ fun main() {
 }
 
 fun Application.module() {
+    configureLoginRouting()
+    configureSerialization()
     CreaytUser()
     SumNambers()
     configureRouting()
-    login()
     filetext()
     photo()
+    configureRegisterRouting()
 }

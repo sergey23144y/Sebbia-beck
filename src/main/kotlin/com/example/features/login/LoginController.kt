@@ -2,10 +2,17 @@ package com.example.features.login
 
 import com.example.database.user.usser
 import com.example.database.user.UsersDTO
+import com.example.features.register.RegisterResponseRemote
+import com.example.plugins.generateTokenLong
+import com.example.plugins.generateTokenShort
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
+import org.jetbrains.exposed.sql.StdOutSqlLogger
+import org.jetbrains.exposed.sql.addLogger
+import org.jetbrains.exposed.sql.transactions.transaction
+import org.jetbrains.exposed.sql.update
 import java.util.*
 
 class LoginController(private val call: ApplicationCall) {
@@ -17,17 +24,21 @@ class LoginController(private val call: ApplicationCall) {
         if(userDTO == null){
             call.respond(HttpStatusCode.BadRequest, "User not found")
         } else {
-            if(userDTO.password== receive.password){
-                val token = UUID.randomUUID().toString()
-                usser.insert(
-                    UsersDTO(
-                        login = receive.login,
-                        password = receive.password,
-                        token_short = "",
-                        token_long = token,
-                    )
+            if(userDTO.password == receive.password){
+               val tokenShort = generateTokenShort(receive.login)
+                val tokenLong = generateTokenLong(receive.login)
+                transaction {
+                    addLogger(StdOutSqlLogger)
+
+                    usser.update({ usser.login eq receive.login }) {
+                        it[token_long] = tokenLong
+                        it[token_short] = tokenShort
+                    }
+                }
+                call.respond(
+                    RegisterResponseRemote(tokenShort = tokenShort,
+                    tokenLong = tokenLong )
                 )
-                call.respond(LoginResponseRemote(token = token))
             } else{
                 call.respond(HttpStatusCode.BadRequest, "Invalid password")
             }

@@ -13,15 +13,10 @@ fun Application.configureLoginRouting() {
     routing {
         post("/login") {
 
-            val receive = call.receive<LoginReceiveRemote>()
-            if (InMemoryCache.userList.map {it.login }.contains(receive.login)){
 
-                val token = UUID.randomUUID().toString()
-                InMemoryCache.token.add(TokenCache(login = receive.login, token = token))
-                call.respond(LoginResponseRemote(token = token))
+            val loginController = LoginController(call)
+            loginController.performLogin()
 
-            }
-            call.respond(HttpStatusCode.BadRequest)
         }
     }
 }
