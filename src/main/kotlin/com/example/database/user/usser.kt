@@ -27,14 +27,16 @@ object usser: Table("usser") {
     // Извлекаем user
     fun fetchUser(login: String): UsersDTO? {
         return try {
-            val user = usser.select { usser.login.eq(login) }.single()
-             UsersDTO(
-                login = user[usser.login],
-                password = user[password],
-                token_short = user[token_short],
-                token_long = user[token_long],
-                 personId = user[personId]
-            )
+            transaction {
+                val user = usser.select { usser.login.eq(login) }.single()
+                UsersDTO(
+                    login = user[usser.login],
+                    password = user[password],
+                    token_short = user[token_short],
+                    token_long = user[token_long],
+                    personId = user[personId]
+                )
+            }
         } catch (e: Exception) {
             null
         }
