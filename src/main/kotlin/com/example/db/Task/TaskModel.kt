@@ -3,6 +3,9 @@ package com.example.db.Task
 import io.ktor.http.*
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
+import org.jetbrains.exposed.sql.jodatime.date
+import org.jetbrains.exposed.sql.jodatime.datetime
+
 import org.jetbrains.exposed.sql.transactions.transaction
 
 
@@ -11,8 +14,8 @@ object TaskModel : Table("task"){
     private  val id = TaskModel.integer("id").autoIncrement().primaryKey()
     private  val name = TaskModel.varchar("name", 64)
     private  val status = TaskModel.integer("status").nullable()
-    private  val start_date = TaskModel.varchar("start_data",64).nullable()
-    private  val scope = TaskModel.varchar("score",64).nullable()
+    private  val start_date = TaskModel.date("start_data").nullable()
+    private  val scope = TaskModel.datetime("score").nullable()
     private  val description = TaskModel.integer("descriptionid").nullable()
     private  val parent = TaskModel.integer("parent").nullable()
     private  val generathon = TaskModel.integer("generation").nullable()
