@@ -1,5 +1,6 @@
 package com.example
 
+import com.example.db.Task.TaskContriller
 import com.example.db.dataDb.password
 import com.example.db.dataDb.url
 import com.example.db.dataDb.user
@@ -37,6 +38,7 @@ fun main() {
 }
 
 fun Application.module() {
+    TaskContriller()
     configureLoginRouting()
     configureSerialization()
     CreaytUser()
