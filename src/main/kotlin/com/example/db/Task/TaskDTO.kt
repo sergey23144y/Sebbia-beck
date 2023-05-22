@@ -11,10 +11,8 @@ class TaskDTO(
     var id: Int?,
     val name: String,
     val status: Int?,
-    @Contextual
-    val start_date: DateTime?,
-    @Contextual
-    val scope: DateTime?,
+    val start_date: String?,
+    val scope: String?,
     val description: Int?,
     val parent: Int?,
     val generathon: Int?,
