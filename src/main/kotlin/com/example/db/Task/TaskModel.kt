@@ -11,10 +11,10 @@ import org.jetbrains.exposed.sql.transactions.transaction
 
 object TaskModel : Table("task"){
 
-    private  val id = TaskModel.integer("id").autoIncrement().primaryKey()
+    private  val id = TaskModel.integer("id").autoIncrement()
     private  val name = TaskModel.varchar("name", 64)
     private  val status = TaskModel.integer("status").nullable()
-    private  val start_date = TaskModel.date("start_data").nullable()
+    private  val start_date = TaskModel.datetime("start_data").nullable()
     private  val scope = TaskModel.datetime("score").nullable()
     private  val description = TaskModel.integer("descriptionid").nullable()
     private  val parent = TaskModel.integer("parent").nullable()
@@ -29,8 +29,8 @@ fun  insert(taskDTO: TaskDTO){
         TaskModel.insert{
             it[name] = taskDTO.name
             it[status] = taskDTO.status
-            it[start_date] = taskDTO.start_date
-            it[scope] = taskDTO.scope
+            it[start_date] = taskDTO.start_date?.toDateTime()
+            it[scope] = taskDTO.scope?.toDateTime()
             it[description] = taskDTO.description
             it[parent] = taskDTO.parent
             it[generathon] = taskDTO.generathon
@@ -38,7 +38,11 @@ fun  insert(taskDTO: TaskDTO){
         }
 
     }
-}fun getTaskAll(): List<TaskDTO> {
+}
+
+
+
+    fun getTaskAll(): List<TaskDTO> {
         return try {
             transaction {
                 TaskModel.selectAll().map {
@@ -46,8 +50,8 @@ fun  insert(taskDTO: TaskDTO){
                         it[TaskModel.id],
                         it[name],
                         it[status],
-                        it[start_date],
-                        it[scope],
+                        it[start_date]?.toDateTime(),
+                        it[scope]?.toDateTime(),
                         it[description],
                         it[parent],
                         it[generathon],
@@ -56,9 +60,10 @@ fun  insert(taskDTO: TaskDTO){
                 }
             }
         }catch (e: Exception) {
-            null
+            ArrayList<TaskDTO>()
         }!!
 }
+
 
 
     fun getTask(id:Int): TaskDTO? {
@@ -69,8 +74,8 @@ fun  insert(taskDTO: TaskDTO){
                 id = taskModle[TaskModel.id],
                 name = taskModle[name],
                 status = taskModle[status],
-                start_date = taskModle[start_date],
-                scope = taskModle[scope],
+                start_date = taskModle[start_date]?.toDateTime(),
+                scope = taskModle[scope]?.toDateTime(),
                 description = taskModle[description],
                 parent = taskModle[parent],
                 generathon = taskModle[generathon],
@@ -90,8 +95,8 @@ fun  insert(taskDTO: TaskDTO){
                 {
                     it[name] = taskDTO.name
                     it[status] = taskDTO.status
-                    it[start_date] = taskDTO.start_date
-                    it[scope] = taskDTO.scope
+                    it[start_date] = taskDTO.start_date?.toDateTime()
+                    it[scope] = taskDTO.scope?.toDateTime()
                     it[description] = taskDTO.description
                     it[parent] = taskDTO.parent
                     it[generathon] = taskDTO.generathon
