@@ -2,6 +2,8 @@ package com.example
 
 import CommentContriller
 import com.example.db.Description.DescriptionContriller
+import com.example.db.Role.RoleContriller
+import com.example.db.Role.RoleModel.getRole
 import com.example.db.Task.TaskContriller
 import com.example.db.dataDb.password
 import com.example.db.dataDb.url
@@ -24,8 +26,11 @@ fun main() {
         password = "123321"
     )
 
+
+
    embeddedServer(Netty, port = 8080, host = "0.0.0.0", module = Application::module)
         .start(wait = true)
+
 
 
 // настраиваем Flyway
@@ -40,6 +45,7 @@ fun main() {
 }
 
 fun Application.module() {
+    RoleContriller()
     TaskContriller()
     configureLoginRouting()
     configureSerialization()
