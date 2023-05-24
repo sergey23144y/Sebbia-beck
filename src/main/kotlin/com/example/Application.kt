@@ -1,6 +1,7 @@
 package com.example
 
 import com.example.db.Task.TaskContriller
+import com.example.db.UserRoleProject.UserRoleProjectController
 import com.example.db.dataDb.password
 import com.example.db.dataDb.url
 import com.example.db.dataDb.user
@@ -15,30 +16,31 @@ import org.jetbrains.exposed.sql.Database
 
 
 fun main() {
-    Database.connect(
-        url = "jdbc:postgresql://localhost:5432/Sebbia",
-        driver = "org.postgresql.Driver",
-        user = "postgres",
-        password = "123321"
-    )
-
-   embeddedServer(Netty, port = 8080, host = "0.0.0.0", module = Application::module)
-        .start(wait = true)
-
-
-// настраиваем Flyway
+    // настраиваем Flyway
     val flyway = Flyway.configure()
-        .dataSource(url, user, password)
+        .dataSource("jdbc:postgresql://localhost:5432/sebbia", "postgres", "111")
         .baselineOnMigrate(true)
         .locations("db/migration") // указываем папку с миграциями
         .load()
 
 // запускаем миграции
     flyway.migrate()
+
+
+    Database.connect(
+        url = "jdbc:postgresql://localhost:5432/sebbia",
+        driver = "org.postgresql.Driver",
+        user = "postgres",
+        password = "111"
+    )
+
+   embeddedServer(Netty, port = 8080, host = "0.0.0.0", module = Application::module)
+        .start(wait = true)
 }
 
 fun Application.module() {
     TaskContriller()
+    UserRoleProjectController()
     configureLoginRouting()
     configureSerialization()
     CreaytUser()
