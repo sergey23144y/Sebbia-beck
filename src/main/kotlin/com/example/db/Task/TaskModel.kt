@@ -1,3 +1,4 @@
+
 import com.example.db.Task.TaskDTO
 import io.ktor.http.*
 import org.jetbrains.exposed.sql.*
@@ -147,9 +148,9 @@ object TaskModel : Table("task"){
 //        return try {
 //
 //        transaction {
-//            val taskModle = TaskModel.select { TaskModel.id.eq(id) }.single()
+//            val taskModle = com.example.db.Task.TaskModel.select { com.example.db.Task.TaskModel.id.eq(id) }.single()
 //            var taskDTO = TaskDTO(
-//                id = taskModle[TaskModel.id],
+//                id = taskModle[com.example.db.Task.TaskModel.id],
 //                name = taskModle[name],
 //                status = taskModle[status],
 //                start_date = taskModle[start_date],
