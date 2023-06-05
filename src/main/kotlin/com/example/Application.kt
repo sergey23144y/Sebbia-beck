@@ -5,6 +5,7 @@ import com.example.db.Description.DescriptionContriller
 import com.example.db.Role.RoleContriller
 import com.example.db.Role.RoleModel.getRole
 import com.example.db.Task.TaskContriller
+import com.example.db.UserRoleProject.UserRoleProjectController
 import com.example.db.dataDb.password
 import com.example.db.dataDb.url
 import com.example.db.dataDb.user
@@ -47,6 +48,7 @@ fun main() {
 fun Application.module() {
     RoleContriller()
     TaskContriller()
+    UserRoleProjectController()
     configureLoginRouting()
     configureSerialization()
     CreaytUser()
